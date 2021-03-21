@@ -1,0 +1,127 @@
+package br.edu.ifcvideira.controllers.views;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import javax.swing.SwingConstants;
+
+import br.edu.ifcvideira.DAOs.LoginDao;
+import br.edu.ifcvideira.beans.Login;
+
+import javax.swing.JPasswordField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+public class LgLogin extends JInternalFrame {
+	private static final long serialVersionUID = 1L;
+	private JTextField tfUser;
+	private JPasswordField psSenha;
+	Login lg = new Login();
+	LoginDao lgDao = new LoginDao();
+
+	public LgLogin() {
+		super("Login", 
+				false, // resizable
+				false, // closable
+				false, // maximizable
+				false);// iconifiable
+		getContentPane().setBackground(new Color(204, 255, 255));
+
+		// ...Create the GUI and put it in the window...
+
+		// ...Then set the window size or call pack...
+		setSize(570, 359);
+
+		getContentPane().setLayout(null);
+
+		JLabel lblLoginToqueMgico = new JLabel("Login Toque M\u00E1gico 1.0");
+		lblLoginToqueMgico.setBounds(0, 0, 554, 83);
+		lblLoginToqueMgico.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLoginToqueMgico.setFont(new Font("Trebuchet MS", Font.PLAIN, 22));
+		getContentPane().add(lblLoginToqueMgico);
+
+		JLabel lblUsurio = new JLabel("Usu\u00E1rio:");
+		lblUsurio.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblUsurio.setBounds(91, 94, 85, 26);
+		getContentPane().add(lblUsurio);
+
+		tfUser = new JTextField();
+		tfUser.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		tfUser.setBounds(172, 94, 308, 26);
+		getContentPane().add(tfUser);
+		tfUser.setColumns(10);
+
+		JLabel lblSenha = new JLabel("Senha:");
+		lblSenha.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblSenha.setBounds(91, 147, 85, 26);
+		getContentPane().add(lblSenha);
+
+		psSenha = new JPasswordField();
+		psSenha.setBounds(172, 147, 308, 26);
+		getContentPane().add(psSenha);
+
+		JButton btLogin = new JButton("Entrar");
+		btLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lg.setLogin(tfUser.getText());
+				lg.setSenha(String.valueOf(psSenha.getPassword()));
+
+				/**
+				 * Comentado para facilitar execução rápida em testes
+				 */
+				// if (lgDao.realizarLogin(lg)) {
+				MainInternalFrame.menuBar.setVisible(true);
+				dispose();
+				Login.idUser = 1; /* Remover quando tirar comentários */
+				// }else {
+				// JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos", "Acesso
+				// Negado", JOptionPane.ERROR_MESSAGE);
+				limpar();
+				// }
+			}
+		});
+		btLogin.setFont(new Font("Trebuchet MS", Font.PLAIN, 23));
+		btLogin.setBounds(91, 212, 151, 37);
+		getContentPane().add(btLogin);
+
+		JButton btCancelar = new JButton("Sair");
+		btCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainInternalFrame.menuBar.setVisible(false);
+			}
+		});
+		btCancelar.setFont(new Font("Trebuchet MS", Font.PLAIN, 23));
+		btCancelar.setBounds(329, 212, 151, 37);
+		getContentPane().add(btCancelar);
+
+		JButton btAtualizar = new JButton("Atualizar");
+		btAtualizar.setEnabled(false);
+		btAtualizar.setToolTipText("Alterar: nome de usu\u00E1rio, senha ou saldo");
+		btAtualizar.setFont(new Font("Trebuchet MS", Font.PLAIN, 23));
+		btAtualizar.setBounds(211, 260, 151, 37);
+		getContentPane().add(btAtualizar);
+	}
+
+	/**
+	 * Limpa campos
+	 */
+	private void limpar() {
+		tfUser.setText(null);
+		psSenha.setText(null);
+	}
+
+	/**
+	 * Centraliza janela
+	 */
+	public void centralizarJanela() {
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+		setLocation(x, y);
+	}
+}

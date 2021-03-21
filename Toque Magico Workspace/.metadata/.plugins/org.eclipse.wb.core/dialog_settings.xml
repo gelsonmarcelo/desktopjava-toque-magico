@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.PalettePreferencesDialog">
+		<item value="457" key="x"/>
+		<item value="525" key="width"/>
+		<item value="260" key="y"/>
+		<item value="339" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.swing.model.property.editor.models.table.TableModelDialog">
+		<item value="333" key="x"/>
+		<item value="774" key="width"/>
+		<item value="154" key="y"/>
+		<item value="551" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.ImportArchiveDialog">
+		<item value="457" key="x"/>
+		<item value="525" key="width"/>
+		<item value="209" key="y"/>
+		<item value="442" key="height"/>
+		<list key="HISTORY_JAR_LIST">
+			<item value="C:/Users/usuario/Desktop/Trabalho Final/Toque Magico v0.1/jcalendar-1.4.jar"/>
+			<item value="C:\Users\usuario\Desktop\jcalendar-1.4.jar"/>
+		</list>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.actions.assistant.LayoutAssistantWindow">
+		<item value="681" key="x"/>
+		<item value="379" key="y"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.palette.dialogs.PaletteManagerDialog">
+		<item value="457" key="x"/>
+		<item value="525" key="width"/>
+		<item value="172" key="y"/>
+		<item value="516" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.model.property.editor.string.StringPropertyDialog">
+		<item value="455" key="x"/>
+		<item value="530" key="width"/>
+		<item value="257" key="y"/>
+		<item value="346" key="height"/>
+	</section>
+</section>

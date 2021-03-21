@@ -1,0 +1,377 @@
+package br.edu.ifcvideira.controllers.views;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import br.edu.ifcvideira.DAOs.ContasDao;
+import br.edu.ifcvideira.DAOs.FornecedorDao;
+import br.edu.ifcvideira.beans.Contas;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+
+public class CxContas extends JInternalFrame {
+	private static final long serialVersionUID = 1L;
+	private JTextField tfValor;
+	private JComboBox<Object> cbFornecedor;
+	private JTable table;
+	private JTextArea txDescricao;
+	private JCheckBox cbPago;
+	private List<Object> contas = new ArrayList<Object>();
+	private JTextField tfPesquisa;
+	public static boolean alteracao = false;
+
+	SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	Contas co = new Contas();
+	ContasDao coDao = new ContasDao();
+	FornecedorDao fcDao = new FornecedorDao();
+	private JTextField tfTotal;
+	private JDateChooser dcVencimento;
+	private JTextField tfCodigo;
+	private JButton btRegistrar;
+	private JButton btAtualizar;
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public CxContas() {
+		super("Contas", 
+				true, // resizable
+				true, // closable
+				true, // maximizable
+				true);// iconifiable
+
+		// ...Create the GUI and put it in the window...
+
+		// ...Then set the window size or call pack...
+		setSize(1320, 800);
+
+		getContentPane().setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 408, 1284, 262);
+		getContentPane().add(scrollPane);
+
+		table = new JTable();
+		table.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		table.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent arg0) {
+				setCamposFromTabela();
+				btRegistrar.setEnabled(false);
+				btRegistrar.setToolTipText("Limpe os campos para habilitar o botão.");
+				btAtualizar.setEnabled(true);
+				btAtualizar.setToolTipText("Atualizar informa\u00E7\u00F5es da conta");
+			}
+		});
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Código", "Valor", "Nome", "Descrição", "Vencimento", "Pago?" }));
+
+		atualizarTabela();
+
+		JLabel lblContas = new JLabel("Contas");
+		lblContas.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
+		lblContas.setHorizontalAlignment(SwingConstants.CENTER);
+		lblContas.setBounds(0, 0, 1304, 70);
+		getContentPane().add(lblContas);
+
+		JLabel lblValor = new JLabel("Valor:");
+		lblValor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblValor.setBounds(260, 81, 120, 32);
+		getContentPane().add(lblValor);
+
+		JLabel lblFornecedor = new JLabel("Fornecedor:");
+		lblFornecedor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblFornecedor.setBounds(260, 124, 120, 32);
+		getContentPane().add(lblFornecedor);
+
+		JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o:");
+		lblDescrio.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblDescrio.setBounds(260, 167, 120, 32);
+		getContentPane().add(lblDescrio);
+
+		JLabel lblVencimento = new JLabel("Vencimento:");
+		lblVencimento.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblVencimento.setBounds(656, 81, 132, 32);
+		getContentPane().add(lblVencimento);
+
+		tfValor = new JTextField();
+		tfValor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		tfValor.setBounds(390, 81, 132, 32);
+		getContentPane().add(tfValor);
+		tfValor.setColumns(10);
+
+		cbFornecedor = new JComboBox<>();
+		cbFornecedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Aassssssss");
+			}
+		});
+		
+				/*try {
+					cbFornecedor.setModel(new DefaultComboBoxModel(fcDao.buscarNomesFornecedores()));
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				alteracao = false;*/
+		
+		try {
+			cbFornecedor.setModel(new DefaultComboBoxModel(fcDao.buscarNomesFornecedores()));
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		cbFornecedor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		cbFornecedor.setBounds(390, 124, 475, 32);
+		getContentPane().add(cbFornecedor);
+
+		JScrollPane scrollPaneDescricao = new JScrollPane();
+		scrollPaneDescricao.setBounds(390, 167, 581, 159);
+		getContentPane().add(scrollPaneDescricao);
+
+		txDescricao = new JTextArea();
+		txDescricao.setFont(new Font("Trebuchet MS", Font.PLAIN, 17));
+		scrollPaneDescricao.setViewportView(txDescricao);
+		txDescricao.setWrapStyleWord(true);
+		txDescricao.setLineWrap(true);
+
+		btRegistrar = new JButton("Registrar");
+		btRegistrar.setToolTipText("Registrar nova conta");
+		btRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					// atribuição dos valores dos campos para o objeto cliente
+					co.setDescricao(txDescricao.getText());
+					co.setDataVencimento(formato.format(dcVencimento.getDate()));
+					co.setValor(Double.parseDouble(tfValor.getText()));
+					co.setStatus(cbPago.isSelected());
+					co.setFornecedor(String.valueOf(cbFornecedor.getSelectedItem()));
+
+					// chamada do método de cadastro na classe Dao
+					coDao.cadastrarConta(co);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
+				atualizarTabela();
+				limpar();
+			}
+		});
+		btRegistrar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btRegistrar.setBounds(390, 337, 173, 32);
+		getContentPane().add(btRegistrar);
+
+		JButton btLimpar = new JButton("Limpar");
+		btLimpar.setToolTipText("Limpar campos");
+		btLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				limpar();
+			}
+		});
+		btLimpar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btLimpar.setBounds(798, 337, 173, 32);
+		getContentPane().add(btLimpar);
+
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 395, 1284, 2);
+		getContentPane().add(separator);
+
+		cbPago = new JCheckBox("Pago?");
+		cbPago.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (!btRegistrar.isEnabled()) {
+					try {
+						if (cbPago.isSelected()) {
+							co.setStatus(true);
+						} else {
+							co.setStatus(false);
+						}
+						co.setCodigo(Integer.parseInt(tfCodigo.getText()));
+						coDao.atualizarEstadoConta(co);
+						JOptionPane.showMessageDialog(null, "Estado da conta alterado");
+						atualizarTabela();
+						limpar();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		cbPago.setForeground(Color.BLUE);
+		cbPago.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		cbPago.setBounds(260, 342, 97, 23);
+		getContentPane().add(cbPago);
+
+		btAtualizar = new JButton("Atualizar");
+		btAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					co.setDescricao(txDescricao.getText());
+					co.setDataVencimento(formato.format(dcVencimento.getDate()));
+					co.setValor(Double.parseDouble(tfValor.getText()));
+					co.setStatus(cbPago.isSelected());
+					co.setCodigo(Integer.parseInt(tfCodigo.getText()));
+
+					coDao.atualizarConta(co);
+					atualizarTabela();
+					limpar();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btAtualizar.setEnabled(false);
+		btAtualizar.setToolTipText("Atualizar informa\u00E7\u00F5es da conta");
+		btAtualizar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btAtualizar.setBounds(595, 337, 173, 32);
+		getContentPane().add(btAtualizar);
+
+		JButton btExcluir = new JButton("Excluir Conta");
+		btExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				co.setCodigo(Integer.parseInt(tfCodigo.getText()));
+				try {
+					coDao.deletarConta(co);
+					atualizarTabela();
+					limpar();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btExcluir.setToolTipText("Deletar conta");
+		btExcluir.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btExcluir.setBounds(565, 681, 203, 32);
+		getContentPane().add(btExcluir);
+
+		tfPesquisa = new JTextField();
+		tfPesquisa.setEnabled(false);
+		tfPesquisa.setToolTipText("Indispon\u00EDvel nesta vers\u00E3o");
+		tfPesquisa.setText("Pesquisar");
+		tfPesquisa.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		tfPesquisa.setColumns(10);
+		tfPesquisa.setBounds(1054, 681, 240, 32);
+		getContentPane().add(tfPesquisa);
+
+		JLabel label = new JLabel("Total Caixa:");
+		label.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		label.setBounds(10, 681, 120, 32);
+		getContentPane().add(label);
+
+		tfTotal = new JTextField();
+		tfTotal.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		tfTotal.setEditable(false);
+		tfTotal.setColumns(10);
+		tfTotal.setBounds(140, 681, 173, 32);
+		getContentPane().add(tfTotal);
+
+		dcVencimento = new JDateChooser();
+		dcVencimento.setBounds(798, 81, 175, 32);
+		getContentPane().add(dcVencimento);
+
+		tfCodigo = new JTextField();
+		tfCodigo.setEditable(false);
+		tfCodigo.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		tfCodigo.setColumns(10);
+		tfCodigo.setBounds(357, 299, 0, 23);
+		getContentPane().add(tfCodigo);
+		
+		JButton btNovoFornecedor = new JButton("Novo");
+		btNovoFornecedor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				FornecedorFrame janela = null;
+				try {
+					janela = new FornecedorFrame();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				janela.setVisible(true);
+			}
+		});
+		btNovoFornecedor.setToolTipText("Cadastrar novo fornecedor");
+		btNovoFornecedor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btNovoFornecedor.setBounds(874, 124, 97, 32);
+		getContentPane().add(btNovoFornecedor);
+	}
+
+	/**
+	 * Passa informações da tabela para os campos
+	 */
+	public void setCamposFromTabela() {
+		tfCodigo.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 0)));
+		tfValor.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 1)));
+		cbFornecedor.setSelectedItem(String.valueOf(table.getValueAt(table.getSelectedRow(), 2)));
+		txDescricao.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 3)));
+
+		Date date = null;
+		try {
+			date = formato.parse((String.valueOf(table.getValueAt(table.getSelectedRow(), 4))));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		dcVencimento.setDate(date);
+
+		if (table.getValueAt(table.getSelectedRow(), 5).equals("Sim")) {
+			cbPago.setSelected(true);
+		} else {
+			cbPago.setSelected(false);
+		}
+	}
+
+	/**
+	 * Limpa os campos
+	 */
+	public void limpar() {
+		tfValor.setText(null);
+		cbFornecedor.setSelectedIndex(0);
+		txDescricao.setText(null);
+		dcVencimento.setDate(null);
+		try {
+			tfCodigo.setText(String.valueOf(coDao.RetornarProximoCodigoConta()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		cbPago.setSelected(false);
+		btRegistrar.setEnabled(true);
+		btRegistrar.setToolTipText("");
+		btAtualizar.setEnabled(false);
+		btAtualizar.setToolTipText("Selecione uma conta da tabela para atualizar");
+	}
+
+	/**
+	 * Atualiza a tabela
+	 */
+	public void atualizarTabela() {
+		try {
+			contas = coDao.buscarTodos();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.setNumRows(0);
+			for (int x = 0; x != contas.size(); x++) {
+				model.addRow((Object[]) contas.get(x));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+}

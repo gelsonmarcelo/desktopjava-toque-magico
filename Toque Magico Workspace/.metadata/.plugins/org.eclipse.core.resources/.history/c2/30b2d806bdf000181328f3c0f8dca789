@@ -1,0 +1,124 @@
+package br.edu.ifcvideira.controllers.views;
+
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import br.edu.ifcvideira.DAOs.CaixaDao;
+import br.edu.ifcvideira.beans.Caixa;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class CxCaixa extends JInternalFrame {
+	private static final long serialVersionUID = 1L;
+	private JTable table;
+	private List<Object> caixa = new ArrayList<Object>();
+	private JTextField tfPesquisa;
+	private JTextField tfTotal;
+
+	Caixa co = new Caixa();
+	CaixaDao coDao = new CaixaDao();
+
+	public CxCaixa() {
+		super("Caixa", true, 
+				// resizable
+				true, // closable
+				true, // maximizable
+				true);// iconifiable
+
+		// ...Create the GUI and put it in the window...
+
+		// ...Then set the window size or call pack...
+		setSize(1320, 800);
+
+		getContentPane().setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 124, 1284, 546);
+		getContentPane().add(scrollPane);
+
+		table = new JTable();
+		table.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		table.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent arg0) {
+				// setCamposFromTabela();
+			}
+		});
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Código", "Valor", "Nome", "Descrição", "Data" }));
+		atualizarTabela();
+		JLabel lblCaixa = new JLabel("Caixa");
+		lblCaixa.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
+		lblCaixa.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCaixa.setBounds(0, 0, 1304, 70);
+		getContentPane().add(lblCaixa);
+
+		JButton btExcluir = new JButton("Excluir Registro");
+		btExcluir.setToolTipText("Indispon\u00EDvel nesta vers\u00E3o");
+		btExcluir.setEnabled(false);
+		btExcluir.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btExcluir.setBounds(568, 681, 203, 32);
+		getContentPane().add(btExcluir);
+
+		tfPesquisa = new JTextField();
+		tfPesquisa.setToolTipText("Indispon\u00EDvel nesta vers\u00E3o");
+		tfPesquisa.setEnabled(false);
+		tfPesquisa.setText("Pesquisar");
+		tfPesquisa.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		tfPesquisa.setColumns(10);
+		tfPesquisa.setBounds(1054, 81, 240, 32);
+		getContentPane().add(tfPesquisa);
+
+		JLabel lblTotalCaixa = new JLabel("Total Caixa:");
+		lblTotalCaixa.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		lblTotalCaixa.setBounds(10, 681, 120, 32);
+		getContentPane().add(lblTotalCaixa);
+
+		tfTotal = new JTextField();
+		tfTotal.setEditable(false);
+		tfTotal.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		tfTotal.setColumns(10);
+		tfTotal.setBounds(140, 681, 173, 32);
+		getContentPane().add(tfTotal);
+
+		JButton btAtualizar = new JButton("UpdateImg");
+		btAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				atualizarTabela();
+			}
+		});
+		btAtualizar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btAtualizar.setBounds(10, 81, 110, 32);
+		getContentPane().add(btAtualizar);
+	}
+
+	/**
+	 * Atualiza a tabela
+	 */
+	public void atualizarTabela() {
+		try {
+			caixa = coDao.buscarTodos();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.setNumRows(0);
+			for (int x = 0; x != caixa.size(); x++) {
+				model.addRow((Object[]) caixa.get(x));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+}

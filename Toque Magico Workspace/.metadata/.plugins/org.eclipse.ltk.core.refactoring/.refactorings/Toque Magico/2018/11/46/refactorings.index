@@ -1,0 +1,74 @@
+1542033745005	Copy compilation unit
+1542034970786	Rename type 'ClienteView'
+1542034988428	Rename type 'CxContasView'
+1542034993694	Rename type 'CxHojeView'
+1542037782724	Rename field 'co'
+1542037787059	Rename field 'ccx'
+1542037791312	Rename field 'coDao'
+1542037876130	Rename field 'cx'
+1542037912772	Rename field 'cxDao'
+1542038384026	Convert local variable 'rbServico' to field
+1542038390217	Convert local variable 'rbProduto' to field
+1542192744033	Convert local variable 'calendar_1' to field
+1542193057739	Rename field 'calendar_1'
+1542193067188	Rename field 'jcalendar'
+1542196463431	Rename field 'co'
+1542196466813	Rename field 'cX'
+1542196470517	Rename field 'coDao'
+1542196718219	Encapsulate field 'id_cliente'
+1542196724001	Encapsulate field 'id_usuario'
+1542196798960	Rename local variable 'se'
+1542196997368	Rename local variable 'se'
+1542197005079	Rename local variable 'se'
+1542197216073	Rename local variable 'calendar_1'
+1542197221427	Convert local variable 'jCalendar' to field
+1542197862657	Rename field 'contas'
+1542198005848	Rename local variable 'calendar_1'
+1542198009642	Convert local variable 'jCalendar' to field
+1542198269048	Rename field 'cx'
+1542198274720	Rename field 'cxDao'
+1542198446080	Rename field 'tfData'
+1542198449140	Rename field 'tfDatanNascimento'
+1542198571490	Convert local variable 'txAnamnese' to field
+1542198938642	Rename local variable 'd'
+1542199205350	Rename field 'formato'
+1542231615476	Rename field 'contas'
+1542231654267	Rename field 'co'
+1542231658977	Rename field 'coDao'
+1542233156739	Rename method 'atualizarTabela'
+1542233201977	Rename field 'produtos'
+1542233319273	Rename field 'pd'
+1542234545001	Rename local variable 'calendar_1'
+1542236131511	Convert local variable 'dateChooser' to field
+1542236140761	Rename field 'dateChooser'
+1542237337637	Convert local variable 'dcVencimento' to field
+1542237827095	Convert local variable 'dcData' to field
+1542238624378	Encapsulate field 'flag'
+1542273375076	Convert local variable 'cbClientes' to field
+1542273380636	Convert local variable 'cbServicos' to field
+1542273524576	Convert local variable 'txObservacoes' to field
+1542275025086	Rename local variable 'e'
+1542275030036	Rename local variable 'janela'
+1542276725124	Rename field 'flag'
+1542277584180	Rename local variable 'btnRegistrar'
+1542278351173	Convert local variable 'cbRealizado' to field
+1542282232548	Convert local variable 'btRegistrar' to field
+1542283225078	Convert local variable 'btAtualizar' to field
+1542284488785	Rename type 'MyInternalFrame'
+1542285373566	Rename method 'createFrame'
+1542285536276	Convert local variable 'menuBar' to field
+1542285853421	Copy compilation unit
+1542285949440	Copy compilation unit
+1542286149167	Rename local variable 'cl'
+1542286186873	Rename field 'usuario'
+1542286287861	Rename local variable 'cl'
+1542286384275	Rename local variable 'cl'
+1542286474467	Rename type 'Login'
+1542287461556	Rename field 'codigo'
+1542460072431	Rename method 'disposeOnClosed'
+1542460100097	Rename method 'dispose'
+1542462302631	Rename method 'setPosicao'
+1542462314144	Rename method 'centreWindows'
+1542471754262	Rename field 'contas'
+1542472687795	Rename field 'tfCliente'
+1542472999229	Rename local variable 'cliente'

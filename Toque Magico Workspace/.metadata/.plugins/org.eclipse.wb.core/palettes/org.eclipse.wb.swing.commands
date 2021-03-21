@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<addComponent
+		id="com.toedter.calendar.JDayChooser_1542039858498"
+		name="JDayChooser"
+		description="Custom component: com.toedter.calendar.JDayChooser"
+		visible="true"
+		class="com.toedter.calendar.JDayChooser"
+		category="org.eclipse.wb.swing.layouts"/>
+	<addComponent
+		id="com.toedter.calendar.JMonthChooser_1542039858498"
+		name="JMonthChooser"
+		description="Custom component: com.toedter.calendar.JMonthChooser"
+		visible="true"
+		class="com.toedter.calendar.JMonthChooser"
+		category="org.eclipse.wb.swing.layouts"/>
+	<addComponent
+		id="com.toedter.components.JLocaleChooser_1542039858498"
+		name="JLocaleChooser"
+		description="Custom component: com.toedter.components.JLocaleChooser"
+		visible="true"
+		class="com.toedter.components.JLocaleChooser"
+		category="org.eclipse.wb.swing.layouts"/>
+	<addComponent
+		id="com.toedter.calendar.JCalendar_1542039858498"
+		name="JCalendar"
+		description="Custom component: com.toedter.calendar.JCalendar"
+		visible="true"
+		class="com.toedter.calendar.JCalendar"
+		category="org.eclipse.wb.swing.layouts"/>
+	<addComponent
+		id="com.toedter.calendar.JDateChooser_1542039858498"
+		name="JDateChooser"
+		description="Custom component: com.toedter.calendar.JDateChooser"
+		visible="true"
+		class="com.toedter.calendar.JDateChooser"
+		category="org.eclipse.wb.swing.layouts"/>
+	<addComponent
+		id="com.toedter.components.JSpinField_1542039858498"
+		name="JSpinField"
+		description="Custom component: com.toedter.components.JSpinField"
+		visible="true"
+		class="com.toedter.components.JSpinField"
+		category="org.eclipse.wb.swing.layouts"/>
+	<addComponent
+		id="com.toedter.calendar.JYearChooser_1542039858498"
+		name="JYearChooser"
+		description="Custom component: com.toedter.calendar.JYearChooser"
+		visible="true"
+		class="com.toedter.calendar.JYearChooser"
+		category="org.eclipse.wb.swing.layouts"/>
+	<addCategory
+		id="jcalendar-1.4_1542039977988"
+		name="jcalendar-1.4"
+		description="Container with import elements from C:/Users/usuario/Desktop/Trabalho Final/Toque Magico v0.1/jcalendar-1.4.jar"
+		visible="true"
+		open="true"/>
+	<addComponent
+		id="com.toedter.calendar.JDayChooser_1542039977988"
+		name="JDayChooser"
+		description="Custom component: com.toedter.calendar.JDayChooser"
+		visible="true"
+		class="com.toedter.calendar.JDayChooser"
+		category="jcalendar-1.4_1542039977988"/>
+	<addComponent
+		id="com.toedter.calendar.JMonthChooser_1542039977988"
+		name="JMonthChooser"
+		description="Custom component: com.toedter.calendar.JMonthChooser"
+		visible="true"
+		class="com.toedter.calendar.JMonthChooser"
+		category="jcalendar-1.4_1542039977988"/>
+	<addComponent
+		id="com.toedter.components.JLocaleChooser_1542039977988"
+		name="JLocaleChooser"
+		description="Custom component: com.toedter.components.JLocaleChooser"
+		visible="true"
+		class="com.toedter.components.JLocaleChooser"
+		category="jcalendar-1.4_1542039977988"/>
+	<addComponent
+		id="com.toedter.calendar.JCalendar_1542039977988"
+		name="JCalendar"
+		description="Custom component: com.toedter.calendar.JCalendar"
+		visible="true"
+		class="com.toedter.calendar.JCalendar"
+		category="jcalendar-1.4_1542039977988"/>
+	<addComponent
+		id="com.toedter.calendar.JDateChooser_1542039977988"
+		name="JDateChooser"
+		description="Custom component: com.toedter.calendar.JDateChooser"
+		visible="true"
+		class="com.toedter.calendar.JDateChooser"
+		category="jcalendar-1.4_1542039977988"/>
+	<addComponent
+		id="com.toedter.components.JSpinField_1542039977988"
+		name="JSpinField"
+		description="Custom component: com.toedter.components.JSpinField"
+		visible="true"
+		class="com.toedter.components.JSpinField"
+		category="jcalendar-1.4_1542039977988"/>
+	<addComponent
+		id="com.toedter.calendar.JYearChooser_1542039977988"
+		name="JYearChooser"
+		description="Custom component: com.toedter.calendar.JYearChooser"
+		visible="true"
+		class="com.toedter.calendar.JYearChooser"
+		category="jcalendar-1.4_1542039977988"/>
+</commands>

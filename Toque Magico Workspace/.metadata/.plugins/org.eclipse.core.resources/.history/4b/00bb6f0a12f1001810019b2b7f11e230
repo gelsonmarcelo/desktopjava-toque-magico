@@ -1,0 +1,49 @@
+17/11/18-Versão 0.13
+19/11/18-Versão 0.14 - Fazendo a parte do Caixa Hoje, fazer o registro da hora, falta criar coluna na tabela caixa;
+21/11/18-Versão 0.15 - Fazendo a ClFrameClientes, falta terminar detalhes no frame de cadastro do cliente (mascara de CPF, ...);
+23/11/18-Versão 0.16 - Terminando ClFrameClientes, arrumar referencias de telefone dos clientes no banco e alterar/excluir telefones
+24/11/18-Versão 0.17 - Validação para proibir exclusão de telefone quando tem apenas um, na ClFrameClientes
+25/11/18-Versão 0.18 - Vários detalhes, cadastro de fornecedor, imagens e aparência ajustados
+
+/*Falta*/
+>Validação dos campos, campos vazios passando no cadastro;
+>campo de Pesquisa funcionar
+>Adicionar unique nas colunas de nomes pois quando for pegar o id para cadastrar nao pode ter 2 nomes iguais
+>Removi as edições de comboBoxes, adicionar mais tarde e tratar a chave estrangeira desconhecida quando digita nome que nao esta no banco
+>Fazer a opção de registro de venda de produtos
+
+/*Banco*/
+/*Selects*/
+select*from agenda;
+select*from usuario;
+select*from cliente;
+select*from servicos;
+select*from fornecedor;
+select*from telefone;
+select*from produtos;
+select*from contas;
+select*from caixa;
+
+/*Atualizações e Inserts*/
+insert into usuario values (1, 'diego', 'khrol', 500);
+insert into cliente values (1, 'Cliente', 'a','2018-12-12','a','a','a','2018-12-12','33','1');
+insert into fornecedor values (1, 'Fornecedor', '999898998');
+alter table caixa add column (hora time not null);
+alter table telefone modify numero varchar(17) unique key;
+ALTER TABLE agenda drop column data_hora;
+alter table agenda add column(data date not null, hora varchar(15) not null);
+
+/*Testes*/
+select count(nome) from fornecedor;
+select*from contas;
+select id_fornecedor from fornecedor where nome like 'fornecedor';
+SELECT id_conta, valor, fornecedor.nome, descricao, data_vencimento, status FROM contas 
+inner join tqmagico.fornecedor where contas.id_fornecedor=fornecedor.id_fornecedor;
+insert into contas values(null, 'talll', '2018-11-22', 10, 1, 1, 1);
+SELECT id_registro AS 'id', valor, cliente.nome AS 'id_nome', descricao, data_registro AS 'data' FROM caixa
+INNER JOIN tqmagico.cliente WHERE caixa.id_cliente_caixa=cliente.id_cliente
+UNION
+SELECT id_conta, valor, fornecedor.nome, descricao, data_vencimento FROM contas 
+INNER JOIN tqmagico.fornecedor WHERE contas.id_fornecedor=fornecedor.id_fornecedor AND status=1
+order by data desc;
+select*from caixa;

@@ -1,0 +1,285 @@
+package br.edu.ifcvideira.controllers.views;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
+
+import br.edu.ifcvideira.DAOs.ClienteDao;
+import br.edu.ifcvideira.beans.Cliente;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+/**
+ * Frame para fazer a atualização das informações do cliente ou ver mais detalhes
+ * 
+ * @author Família
+ *
+ */
+public class ClFrameCliente extends JFrame {
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private List<Object> telefones = new ArrayList<Object>();
+	private JTextField tfNome;
+	private JTextArea txObservacao;
+	private JTable table;
+
+	Cliente cl = new Cliente();
+	ClienteDao clDao = new ClienteDao();
+	private JTextField tfCpf;
+	private JTextField tfLogradouro;
+	SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+	private JTextArea txAnamnese;
+	private JDateChooser dcNascimento;
+	private JTextField tfSaldo;
+	String[] informacoesCliente = new String[9];
+	private boolean atualizarTabelaClientes = false;
+
+
+	/**
+	 * Executa a aplicação
+	 */
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ClFrameCliente frame = new ClFrameCliente();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Cria o frame
+	 * @param Objeto cliente com informações atuais
+	 * @throws Exception 
+	 * @throws SQLException 
+	 */
+	public ClFrameCliente() throws SQLException, Exception {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				if (atualizarTabelaClientes) {
+					ClListar cL = new ClListar();
+					cL.atualizarTabela();
+				}
+			}
+		});
+		informacoesCliente = clDao.buscarInformacoes(ClListar.codigoAtualizarCliente);
+		setTitle("Clientes Toque M\u00E1gico");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setResizable(false);
+		setBounds(100, 100, 575, 587);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JLabel lb1 = new JLabel("Detalhes/Atualiza\u00E7\u00E3o");
+		lb1.setBounds(0, 5, 569, 24);
+		lb1.setHorizontalAlignment(SwingConstants.CENTER);
+		lb1.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		contentPane.add(lb1);
+
+		JLabel lblCliente = new JLabel("Cliente:");
+		lblCliente.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCliente.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblCliente.setBounds(15, 40, 76, 24);
+		contentPane.add(lblCliente);
+
+		JLabel lblValor = new JLabel("Anamnese:");
+		lblValor.setHorizontalAlignment(SwingConstants.LEFT);
+		lblValor.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblValor.setBounds(15, 275, 76, 24);
+		contentPane.add(lblValor);
+
+		tfNome = new JTextField(informacoesCliente[2]);
+		tfNome.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		tfNome.setEditable(true);
+		tfNome.setBounds(112, 40, 447, 24);
+		contentPane.add(tfNome);
+
+		JLabel lblObservaes = new JLabel("Observa\u00E7\u00F5es:");
+		lblObservaes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblObservaes.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblObservaes.setBounds(15, 381, 98, 24);
+		contentPane.add(lblObservaes);
+
+		JScrollPane spObservacoes = new JScrollPane();
+		spObservacoes.setBounds(114, 381, 445, 86);
+		contentPane.add(spObservacoes);
+
+		txObservacao = new JTextArea(informacoesCliente[7]);
+		txObservacao.setToolTipText("");
+		spObservacoes.setViewportView(txObservacao);
+		txObservacao.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		txObservacao.setWrapStyleWord(true);
+		txObservacao.setLineWrap(true);
+
+		JButton btAtualizar = new JButton("Atualizar");
+		btAtualizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					// Atribuição dos valores dos campos para o objeto cliente
+					cl.setNome(tfNome.getText());
+					cl.setCpf(tfCpf.getText());
+					cl.setDataNascimento(formatador.format(dcNascimento.getDate()));
+					cl.setObservacao(txObservacao.getText());
+					cl.setLogradouro(tfLogradouro.getText());
+					cl.setAnamnese(txAnamnese.getText());
+					cl.setSaldo(Double.parseDouble(tfSaldo.getText()));
+					cl.setCodigo(ClListar.codigoAtualizarCliente);
+					
+					clDao.atualizarCliente(cl);
+					atualizarTabelaClientes = true;
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
+				
+			}
+		});
+		btAtualizar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btAtualizar.setBounds(112, 515, 149, 33);
+		contentPane.add(btAtualizar);
+
+		JButton btLimpar = new JButton("Limpar");
+		btLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				limpar();
+			}
+		});
+		btLimpar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btLimpar.setBounds(327, 515, 149, 33);
+		contentPane.add(btLimpar);
+		
+		JLabel lblCpf = new JLabel("CPF:");
+		lblCpf.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCpf.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblCpf.setBounds(15, 75, 76, 24);
+		contentPane.add(lblCpf);
+		
+		tfCpf = new JTextField(informacoesCliente[3]);
+		tfCpf.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		tfCpf.setColumns(10);
+		tfCpf.setBounds(112, 75, 200, 24);
+		contentPane.add(tfCpf);
+		
+		JLabel lblLogradouto = new JLabel("Logradouro:");
+		lblLogradouto.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLogradouto.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblLogradouto.setBounds(15, 145, 98, 24);
+		contentPane.add(lblLogradouto);
+		
+		tfLogradouro = new JTextField(informacoesCliente[5]);
+		tfLogradouro.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		tfLogradouro.setColumns(10);
+		tfLogradouro.setBounds(112, 145, 447, 24);
+		contentPane.add(tfLogradouro);
+		
+		JLabel lblNascimento = new JLabel("Nascimento:");
+		lblNascimento.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNascimento.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblNascimento.setBounds(15, 110, 98, 24);
+		contentPane.add(lblNascimento);
+		
+		dcNascimento = new JDateChooser();
+		dcNascimento.setBounds(112, 110, 166, 24);
+		dcNascimento.setDate(formatador.parse(informacoesCliente[4]));
+		contentPane.add(dcNascimento);
+		
+		JLabel lblContato = new JLabel("Contato:");
+		lblContato.setHorizontalAlignment(SwingConstants.LEFT);
+		lblContato.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblContato.setBounds(15, 180, 98, 24);
+		contentPane.add(lblContato);
+		
+		JScrollPane spContato = new JScrollPane();
+		spContato.setBounds(112, 180, 200, 86);
+		getContentPane().add(spContato);
+
+		table = new JTable();
+		table.setShowGrid(false);
+		table.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent arg0) {
+//				setCamposFromTabela();
+			}
+		});
+		spContato.setViewportView(table);
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Número" }));
+		
+		JScrollPane spAnamnese = new JScrollPane();
+		spAnamnese.setBounds(112, 277, 447, 84);
+		contentPane.add(spAnamnese);
+		
+		txAnamnese = new JTextArea(informacoesCliente[6]);
+		spAnamnese.setViewportView(txAnamnese);
+		txAnamnese.setWrapStyleWord(true);
+		txAnamnese.setToolTipText("");
+		txAnamnese.setLineWrap(true);
+		txAnamnese.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		
+		JLabel lblSaldo = new JLabel("Saldo:");
+		lblSaldo.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSaldo.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		lblSaldo.setBounds(15, 478, 76, 24);
+		contentPane.add(lblSaldo);
+		
+		tfSaldo = new JTextField(informacoesCliente[9]);
+		tfSaldo.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
+		tfSaldo.setColumns(10);
+		tfSaldo.setBounds(112, 478, 200, 24);
+		contentPane.add(tfSaldo);
+
+//		atualizarTabela();
+	}
+	
+	/**
+	 * Limpa campos 
+	 */
+	public void limpar() {
+		
+	}
+	
+	/**
+	 * Atualiza a tabela
+	 */
+	public void atualizarTabela() {
+		try {
+			telefones = clDao.buscarTelefones(ClListar.codigoAtualizarCliente);
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.setNumRows(0);
+			for (int x = 0; x != telefones.size(); x++) {
+				model.addRow((Object[]) telefones.get(x));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+}

@@ -1,0 +1,24 @@
+1543119670671	Rename local variable 'nomeClientes'
+1543120168406	Rename local variable 'id_fornecedor'
+1543125004701	Convert local variable 'btRegistrar' to field
+1543125862382	Encapsulate field 'precoCobrado'
+1543149051872	Copy compilation unit
+1543149086634	Delete element
+1543149104867	Copy compilation unit
+1543149496612	Rename field 'telefones'
+1543149535479	Rename field 'tfCodTelefone'
+1543149645925	Rename method 'atualizarTelefones'
+1543149695508	Rename field 'te'
+1543149721788	Rename field 'teDao'
+1543149753552	Rename method 'atualizarFornecedores'
+1543149887866	Rename field 'tfTelefone'
+1543150071054	Convert local variable 'btAtualizar' to field
+1543150303724	Rename type 'FornecedorFrameCadastro'
+1543150516740	Convert local variable 'btCadastrar' to field
+1543152362433	Rename field 'fcDao'
+1543152719792	Rename local variable 'mnCaixa'
+1543152792202	Rename local variable 'miContas'
+1543169027861	Rename local variable 'menuItem'
+1543169077239	Convert local variable 'miLogin' to field
+1543178068332	Rename local variable 'datas'
+1543184768317	Delete element

@@ -1,0 +1,64 @@
+package br.edu.ifcvideira.controllers.views;
+
+import java.awt.Font;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import com.toedter.calendar.JCalendar;
+
+import br.edu.ifcvideira.DAOs.AgendaDao;
+import br.edu.ifcvideira.beans.Agenda;
+import java.awt.Color;
+
+public class AgCalendario extends JInternalFrame {
+	private static final long serialVersionUID = 1L;
+	public static String dataEnviada;
+
+	SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	Agenda ag = new Agenda();
+	AgendaDao agDao = new AgendaDao();
+
+	public AgCalendario() {
+		super("Agenda", 
+				true, // resizable
+				true, // closable
+				true, // maximizable
+				true); // iconifiable
+		getContentPane().setBackground(new Color(204, 255, 255));
+
+		setSize(1320, 800);
+		getContentPane().setLayout(null);
+
+		JLabel lbCalendario = new JLabel("Calend\u00E1rio");
+		lbCalendario.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
+		lbCalendario.setHorizontalAlignment(SwingConstants.CENTER);
+		lbCalendario.setBounds(0, 0, 1304, 70);
+		getContentPane().add(lbCalendario);
+
+		JCalendar jCalendar = new JCalendar();
+		jCalendar.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (!Agenda.frameAberto) {
+					dataEnviada = formato.format(jCalendar.getDate());
+					AgFrameDia frame = new AgFrameDia();
+					frame.setVisible(true);
+					Agenda.frameAberto = true;
+				}
+			}
+		});
+
+		jCalendar.getDayChooser().setAlwaysFireDayProperty(true);
+		jCalendar.getDayChooser().setToolTipText("");
+		jCalendar.getYearChooser().getSpinner().setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		jCalendar.getMonthChooser().getComboBox().setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		jCalendar.getMonthChooser().getSpinner().setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		jCalendar.setWeekOfYearVisible(false);
+		jCalendar.setBounds(10, 81, 1284, 629);
+		getContentPane().add(jCalendar);
+	}
+}

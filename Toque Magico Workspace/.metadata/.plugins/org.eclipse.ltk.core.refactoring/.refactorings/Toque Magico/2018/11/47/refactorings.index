@@ -1,0 +1,40 @@
+1542499739233	Infer generic type arguments
+1542499746320	Infer generic type arguments
+1542501301050	Rename method 'centreWindow'
+1542502284617	Rename method 'RetornarProximoCodigoServico'
+1542502810977	Rename method 'RetornarProximoCodigoConta'
+1542502824393	Rename method 'RetornarProximoCodigoFornecedor'
+1542503051374	Rename method 'RetornarProximoCodigoConta'
+1542503064025	Rename method 'retornarProximoCodigoConta'
+1542503144521	Rename method 'RetornarProximoCodigoConta'
+1542503262192	Rename method 'buscarTodosClienteX'
+1542503446600	Rename method 'cadastrarServico'
+1542625131192	Rename local variable 'nomeClientes'
+1542625330391	Rename field 'tfFornecedor'
+1542625888309	Rename local variable 'id_fornecedor'
+1542627805938	Rename method 'setId_cliente'
+1542627821071	Rename method 'getId_cliente'
+1542627827045	Rename field 'id_cliente'
+1542627832092	Rename local variable 'id_cliente'
+1542627915258	Rename local variable 'id_fornecedor'
+1542629322265	Convert local variable 'btAtualizar' to field
+1542797900616	Rename method 'getDateTime'
+1542797944413	Rename method 'getDateTime'
+1542801470358	Copy compilation unit
+1542971164716	Rename method 'mascara'
+1542971214858	Rename method 'mascaraCpf'
+1542972550927	Convert local variable 'txAnamnese' to field
+1542972598130	Convert local variable 'dcNascimento' to field
+1542974422561	Rename field 'cbNome'
+1542976425524	Rename local variable 'strings'
+1542979332406	Rename local variable 'cliente'
+1543057776402	Rename method 'atualizarTabela'
+1543062312028	Encapsulate field 'numero2'
+1543062323100	Encapsulate field 'numero3'
+1543063390922	Convert local variable 'btExcluirTelefone' to field
+1543063464287	Convert local variable 'btAtualizarTelefone' to field
+1543063578402	Rename field 'tfCodExcluirTelefone'
+1543063874467	Rename field 'tf'
+1543063877988	Rename field 'tfDao'
+1543064129770	Convert local variable 'btAdicionar' to field
+1543064183592	Rename field 'btAdicionar'

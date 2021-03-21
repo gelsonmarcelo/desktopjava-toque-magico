@@ -1,0 +1,55 @@
+package br.edu.ifcvideira.beans;
+
+public class Telefone {
+	private int codigo;
+	private int id_cliente;
+	private String numero;
+	private String numero2;
+	private String numero3;
+
+	// Construtor
+	public Telefone() {
+	}
+
+	// Encapsulamento
+	public int getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
+	}
+
+	public int getId_cliente() {
+		return id_cliente;
+	}
+
+	public void setId_cliente(int id_cliente) {
+		this.id_cliente = id_cliente;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getNumero2() {
+		return numero2;
+	}
+
+	public void setNumero2(String numero2) {
+		this.numero2 = numero2;
+	}
+
+	public String getNumero3() {
+		return numero3;
+	}
+
+	public void setNumero3(String numero3) {
+		this.numero3 = numero3;
+	}
+
+}

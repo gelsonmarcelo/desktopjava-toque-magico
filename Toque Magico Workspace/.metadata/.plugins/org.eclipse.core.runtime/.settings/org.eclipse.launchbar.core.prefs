@@ -1,0 +1,15 @@
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
+LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:App,org.eclipse.launchbar.core.descriptorType.default\:ClienteView,org.eclipse.launchbar.core.descriptorType.default\:FrameInicial,org.eclipse.launchbar.core.descriptorType.default\:FornecedorFrame,org.eclipse.launchbar.core.descriptorType.default\:ExemploClienteView (1),org.eclipse.launchbar.core.descriptorType.default\:ClFrameCliente,org.eclipse.launchbar.core.descriptorType.default\:AgFrameDia,org.eclipse.launchbar.core.descriptorType.default\:MainInternalFrame
+eclipse.preferences.version=1
+org.eclipse.launchbar.core.descriptorType.default\:AgFrameDia/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:AgFrameDia/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:App/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:App/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:ClFrameCliente/activeLaunchMode=debug
+org.eclipse.launchbar.core.descriptorType.default\:ClienteView\ (1)/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:ClienteView\ (1)/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:ClienteView/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:ExemploClienteView\ (1)/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:MainInternalFrame/activeLaunchMode=run

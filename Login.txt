@@ -1,0 +1,5 @@
+USUÁRIO: admin
+SENHA: admin
+
+Usuario do BD: root
+Senha: password

@@ -1,0 +1,32 @@
+17/11/18-Versão 0.13
+19/11/18-Versão 0.14 - Fazendo a parte do Caixa Hoje, fazer o registro da hora, falta criar coluna na tabela caixa;
+21/11/18-Versão 0.15 - Fazendo a ClFrameClientes, falta terminar detalhes no frame de cadastro do cliente (mascara de CPF, ...);
+
+/*Banco*/
+/*Selects*/
+select*from agenda;
+select*from usuario;
+select*from cliente;
+select*from servicos;
+select*from fornecedor;
+select*from telefone;
+select*from produtos;
+select*from contas;
+select*from caixa;
+
+/*Atualizações e Inserts*/
+insert into usuario values (1, 'Usuário', 'tal', 500);
+insert into cliente values (1, 'Cliente', 'a','2018-12-12','a','a','a','2018-12-12','33','1');
+insert into fornecedor values (1, 'Fornecedor', '999898998');
+
+ALTER TABLE agenda drop column data_hora;
+alter table agenda add column(data date not null, hora varchar(15) not null);
+
+/*Testes*/
+select count(nome) from fornecedor;
+select*from contas;
+select id_fornecedor from fornecedor where nome like 'fornecedor';
+SELECT id_conta, valor, fornecedor.nome, descricao, data_vencimento, status FROM contas 
+inner join tqmagico.fornecedor where contas.id_fornecedor=fornecedor.id_fornecedor;
+
+select*from caixa;

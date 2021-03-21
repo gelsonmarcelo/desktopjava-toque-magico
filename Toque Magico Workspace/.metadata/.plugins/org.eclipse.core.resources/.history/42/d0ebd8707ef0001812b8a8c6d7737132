@@ -1,0 +1,149 @@
+package br.edu.ifcvideira.controllers.views;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
+
+import br.edu.ifcvideira.DAOs.ProdutosDao;
+import br.edu.ifcvideira.DAOs.ServicosDao;
+import br.edu.ifcvideira.beans.Produtos;
+import br.edu.ifcvideira.beans.Servicos;
+
+public class PsListar extends JInternalFrame {
+	private static final long serialVersionUID = 1L;
+	private JTable table;
+	private List<Object> array = new ArrayList<Object>();
+	private JTextField tfPesquisa;
+
+	Produtos pr = new Produtos();
+	ProdutosDao prDao = new ProdutosDao();
+	Servicos se = new Servicos();
+	ServicosDao seDao = new ServicosDao();
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public PsListar() {
+		super("Listar Produtos/Serviços", 
+				true, // resizable
+				true, // closable
+				true, // maximizable
+				true);// iconifiable
+
+		// ...Create the GUI and put it in the window...
+
+		// ...Then set the window size or call pack...
+		setSize(1320, 800);
+
+		getContentPane().setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		scrollPane.setBounds(10, 124, 1284, 546);
+		getContentPane().add(scrollPane);
+
+		table = new JTable();
+		table.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Código", "Nome", "Descrição", "Preço", "Quantidade" }));
+		atualizarTabelaProdutos();
+
+		JLabel lbClientesLista = new JLabel("Lista de ");
+		lbClientesLista.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
+		lbClientesLista.setHorizontalAlignment(SwingConstants.CENTER);
+		lbClientesLista.setBounds(0, 0, 1304, 70);
+		getContentPane().add(lbClientesLista);
+
+		JButton btExcluir = new JButton("Excluir");
+		btExcluir.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btExcluir.setBounds(692, 681, 225, 32);
+		getContentPane().add(btExcluir);
+
+		tfPesquisa = new JTextField();
+		tfPesquisa.setText("Pesquisar");
+		tfPesquisa.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		tfPesquisa.setColumns(10);
+		tfPesquisa.setBounds(1054, 81, 240, 32);
+		getContentPane().add(tfPesquisa);
+
+		JButton btDetalhes = new JButton("+Detalhes/Atualizar");
+		btDetalhes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				/**
+				 * ####FAZER FRAME PARA ABRIR AQUI: EDIÇÃO/ATUALIZAÇÃO DE PRODUTO OU SERVIÇO
+				 */
+			}
+		});
+		btDetalhes.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+		btDetalhes.setBounds(411, 681, 225, 32);
+		getContentPane().add(btDetalhes);
+
+		JComboBox<Object> cbProdutoServico = new JComboBox<Object>();
+		cbProdutoServico.setEnabled(false);
+		cbProdutoServico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Selecionado produto
+				if (cbProdutoServico.getSelectedIndex() == 0) {
+					atualizarTabelaProdutos();
+					// Selecionado serviço
+				} else {
+					atualizarTabelaServicos();
+				}
+			}
+		});
+		cbProdutoServico.setFont(new Font("Trebuchet MS", Font.PLAIN, 28));
+		cbProdutoServico.setModel(new DefaultComboBoxModel(new String[] {"Servi\u00E7os", "Produtos"}));
+		cbProdutoServico.setBounds(717, 21, 155, 32);
+		getContentPane().add(cbProdutoServico);
+	}
+
+	/**
+	 * ####FALTA: fazer apenas um método colocando parâmetros
+	 */
+	/**
+	 * Atualizar tabela de produtos
+	 */
+	public void atualizarTabelaProdutos() {
+		try {
+			array = prDao.buscarTodos();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.setNumRows(0);
+			for (int x = 0; x != array.size(); x++) {
+				model.addRow((Object[]) array.get(x));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+
+	/**
+	 * Atualizar tabela de serviços
+	 */
+	public void atualizarTabelaServicos() {
+		try {
+			array = seDao.buscarTodos();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.setNumRows(0);
+			for (int x = 0; x != array.size(); x++) {
+				model.addRow((Object[]) array.get(x));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+}

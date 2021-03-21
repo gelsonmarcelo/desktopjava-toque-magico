@@ -1,0 +1,61 @@
+1541354310021	Copy compilation unit
+1541354380520	Copy compilation unit
+1541355714005	Encapsulate field 'status'
+1541375556286	Copy compilation unit
+1541375577972	Rename type 'Cliente'
+1541375595542	Rename local variable 'cl'
+1541375853183	Rename type 'Produto'
+1541376097914	Rename local variable 'cl'
+1541376239399	Rename local variable 'cl'
+1541376320891	Rename local variable 'cliente'
+1541376412446	Copy compilation unit
+1541376432850	Rename local variable 'co'
+1541376641845	Rename local variable 'pr'
+1541376796220	Rename local variable 'pr'
+1541376837872	Rename local variable 'produto'
+1541377084226	Copy compilation unit
+1541377152183	Rename local variable 'co'
+1541377256620	Rename local variable 'co'
+1541377339113	Rename local variable 'co'
+1541377478485	Copy compilation unit
+1541377531347	Rename local variable 'se'
+1541377750962	Copy compilation unit
+1541411254086	Copy compilation unit
+1541411285998	Rename local variable 'se'
+1541411495241	Rename local variable 'se'
+1541411582610	Rename local variable 'se'
+1541411616995	Rename local variable 'servicos'
+1541411757821	Delete element
+1541411771939	Copy compilation unit
+1541411811157	Rename local variable 'se'
+1541412019133	Rename local variable 'se'
+1541412025358	Rename local variable 'se'
+1541412027936	Rename local variable 're'
+1541412139157	Rename local variable 'servicos'
+1541412377750	Copy compilation unit
+1541412437011	Rename local variable 'se'
+1541412508457	Rename local variable 'se'
+1541412524121	Rename local variable 'servicos'
+1541412958146	Delete element
+1541413171733	Delete element
+1541415005070	Copy compilation unit
+1541592370683	Rename local variable 'scrollPane'
+1541592830681	Convert local variable 'txDescricao' to field
+1541592898552	Convert local variable 'spDia' to field
+1541592906702	Convert local variable 'spMes' to field
+1541592912059	Convert local variable 'spAno' to field
+1541593004006	Rename local variable 'chckbxPago'
+1541593009658	Convert local variable 'cbPago' to field
+1541593747007	Rename type 'Contas'
+1541594737298	Copy compilation unit
+1541594782269	Rename type 'ContasView'
+1541594791978	Rename type 'HojeView'
+1541595365797	Copy compilation unit
+1541595707123	Copy compilation unit
+1541596529159	Convert local variable 'spDia' to field
+1541596534628	Convert local variable 'spMes' to field
+1541596539945	Convert local variable 'spAno' to field
+1541596691211	Copy compilation unit
+1541596936802	Copy compilation unit
+1541597298820	Copy compilation unit
+1541597895394	Convert local variable 'txDescricao' to field

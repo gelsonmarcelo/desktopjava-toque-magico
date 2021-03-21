@@ -1,0 +1,322 @@
+package br.edu.ifcvideira.controllers.views;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+
+/*
+ * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   - Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *
+ *   - Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ *
+ *   - Neither the name of Oracle or the names of its
+ *     contributors may be used to endorse or promote products derived
+ *     from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+  
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import br.edu.ifcvideira.DAOs.ContasDao;
+import br.edu.ifcvideira.beans.Contas;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDayChooser;
+import com.toedter.calendar.JCalendar;
+ 
+/* Used by InternalFrameDemo.java. */
+public class CxContas extends JInternalFrame {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	static int openFrameCount = 0;
+    static final int xOffset = 30, yOffset = 30;
+    private JTextField tfValor;
+    private JTextField tfFornecedor;
+    private JTable table;
+	private JTextArea txDescricao;
+	private JCheckBox cbPago;
+	private List<Object> contas = new ArrayList<Object>();
+	private JTextField tfPesquisa;
+	
+	GregorianCalendar calendar = new GregorianCalendar();
+	int dia = calendar.get(GregorianCalendar.DAY_OF_MONTH);
+	int mes = calendar.get(GregorianCalendar.MONTH);
+	int ano = calendar.get(GregorianCalendar.YEAR);
+	
+	
+	SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+	Contas co = new Contas();
+	ContasDao coDao = new ContasDao();
+	private JTextField tfTotal;
+	private JTextField tfData;
+	private JCalendar jcalendar;
+ 
+    public CxContas() {
+        super("Contas", 
+              true, //resizable
+              true, //closable
+              true, //maximizable
+              true);//iconifiable
+ 
+        //...Create the GUI and put it in the window...
+ 
+        //...Then set the window size or call pack...
+        setSize(1320,800);
+ 
+        //Set the window's location.
+        setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
+        getContentPane().setLayout(null);
+        
+        JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 408, 1284, 262);
+		getContentPane().add(scrollPane);
+		
+		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent arg0) {
+				//setCamposFromTabela();
+			}
+		});
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Código", "Valor", "Nome", "Descrição", "Vencimento", "Status"
+			}
+		));
+        
+        JLabel lblContas = new JLabel("Contas");
+        lblContas.setFont(new Font("Trebuchet MS", Font.PLAIN, 30));
+        lblContas.setHorizontalAlignment(SwingConstants.CENTER);
+        lblContas.setBounds(0, 0, 1304, 70);
+        getContentPane().add(lblContas);
+        
+        JLabel lblValor = new JLabel("Valor:");
+        lblValor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        lblValor.setBounds(260, 81, 120, 32);
+        getContentPane().add(lblValor);
+        
+        JLabel lblFornecedor = new JLabel("Fornecedor:");
+        lblFornecedor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        lblFornecedor.setBounds(260, 124, 120, 32);
+        getContentPane().add(lblFornecedor);
+        
+        JLabel lblDescrio = new JLabel("Descri\u00E7\u00E3o:");
+        lblDescrio.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        lblDescrio.setBounds(260, 167, 120, 32);
+        getContentPane().add(lblDescrio);
+        
+        JLabel lblVencimento = new JLabel("Vencimento:");
+        lblVencimento.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        lblVencimento.setBounds(642, 81, 132, 32);
+        getContentPane().add(lblVencimento);
+        
+        tfValor = new JTextField();
+        tfValor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        tfValor.setBounds(390, 81, 173, 32);
+        getContentPane().add(tfValor);
+        tfValor.setColumns(10);
+        
+        tfFornecedor = new JTextField();
+        tfFornecedor.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        tfFornecedor.setColumns(10);
+        tfFornecedor.setBounds(390, 124, 581, 32);
+        getContentPane().add(tfFornecedor);
+        
+        JScrollPane scrollPaneDescricao = new JScrollPane();
+        scrollPaneDescricao.setBounds(390, 167, 581, 159);
+        getContentPane().add(scrollPaneDescricao);
+        
+        txDescricao = new JTextArea();
+        txDescricao.setFont(new Font("Trebuchet MS", Font.PLAIN, 17));
+        scrollPaneDescricao.setViewportView(txDescricao);
+        txDescricao.setWrapStyleWord(true);
+        txDescricao.setLineWrap(true);
+        
+        JButton btRegistrar = new JButton("Registrar");
+        btRegistrar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		try {
+        			java.sql.Date data = (Date) formato.parse(/*spDia.getValue() + "-" + spMes.getValue() + "-" + spAno.getValue()*/"12-12-2013");
+					//atribuição dos valores dos campos para o objeto cliente
+					co.setDescricao(txDescricao.getText());
+					co.setDataVencimento(data);
+					co.setValor(Double.parseDouble(tfValor.getText()));
+					co.setStatus(cbPago.isSelected());
+					
+					/**
+					 * Corrigir
+					 */
+					co.setId_usuario_contas(1);
+					co.setId_fornecedor(1);
+					
+					System.out.println(data);
+					
+					// chamada do método de cadastro na classe Dao
+					coDao.cadastrarConta(co);
+        	}catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+				atualizarTabela();
+				limpar();
+        	}
+        });
+        btRegistrar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        btRegistrar.setBounds(483, 337, 173, 32);
+        getContentPane().add(btRegistrar);
+        
+        JButton btLimpar = new JButton("Limpar");
+        btLimpar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		limpar();
+        	}
+        });
+        btLimpar.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        btLimpar.setBounds(715, 337, 173, 32);
+        getContentPane().add(btLimpar);
+        
+        JSeparator separator = new JSeparator();
+        separator.setBounds(10, 395, 1284, 2);
+        getContentPane().add(separator);
+        
+        cbPago = new JCheckBox("Pago?");
+        cbPago.setForeground(Color.BLUE);
+        cbPago.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        cbPago.setBounds(260, 342, 97, 23);
+        getContentPane().add(cbPago);
+        
+        JButton btAtualizarStatus = new JButton("Atualizar Status");
+        btAtualizarStatus.setToolTipText("Atualizar status da conta rapidamente");
+        btAtualizarStatus.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        btAtualizarStatus.setBounds(453, 681, 203, 32);
+        getContentPane().add(btAtualizarStatus);
+        
+        JButton btExcluir = new JButton("Excluir Conta");
+        btExcluir.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        btExcluir.setBounds(715, 681, 203, 32);
+        getContentPane().add(btExcluir);
+        
+        tfPesquisa = new JTextField();
+        tfPesquisa.setText("Pesquisar");
+        tfPesquisa.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        tfPesquisa.setColumns(10);
+        tfPesquisa.setBounds(1054, 681, 240, 32);
+        getContentPane().add(tfPesquisa);
+        
+        JLabel label = new JLabel("Total Caixa:");
+        label.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        label.setBounds(10, 681, 120, 32);
+        getContentPane().add(label);
+        
+        tfTotal = new JTextField();
+        tfTotal.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        tfTotal.setEditable(false);
+        tfTotal.setColumns(10);
+        tfTotal.setBounds(140, 681, 173, 32);
+        getContentPane().add(tfTotal);
+        
+        jcalendar = new JCalendar();
+        jcalendar.setBounds(981, 81, 240, 170);
+        getContentPane().add(jcalendar);
+        
+        jcalendar.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                tfData.setText(jcalendar.getDate().toString());
+            }
+        });
+        
+        tfData = new JTextField();
+        tfData.setFont(new Font("Trebuchet MS", Font.PLAIN, 20));
+        tfData.setColumns(10);
+        tfData.setBounds(798, 81, 173, 32);
+        getContentPane().add(tfData);
+    }
+    
+    /**
+     * Métodos úteis
+     */
+    public void setCamposFromTabela() {
+    	tfValor.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 1)));
+		tfFornecedor.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 2)));
+		txDescricao.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 3)));
+		tfData.setText(String.valueOf(table.getValueAt(table.getSelectedRow(), 4)));
+		/**
+		 * 
+		 * 
+		 * 
+		 * Fazer a condição para verificar se esta pago ou não
+		 */
+		cbPago.setSelected(true);
+	}
+
+	public void limpar() {
+		tfValor.setText(null);
+		tfFornecedor.setText(null);
+		txDescricao.setText(null);
+		tfData.setText(null);
+		/*try {
+			textCodigo.setText(String.valueOf(clDao.RetornarProximoCodigoCliente()));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}*/
+	}
+
+	public void atualizarTabela() {
+		try {
+			contas = coDao.buscarTodos();
+			DefaultTableModel model = (DefaultTableModel) table.getModel();
+			model.setNumRows(0);
+		for (int x=0; x!=contas.size(); x++)
+			{
+				model.addRow((Object[]) contas.get(x));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+}
